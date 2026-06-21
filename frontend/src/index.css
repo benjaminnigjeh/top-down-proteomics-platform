@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-gray-800 bg-gray-50;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+  code {
+    font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply block w-full rounded-md border border-gray-300 px-3 py-2 text-sm
+           focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none
+           bg-white text-gray-800;
+  }
+}

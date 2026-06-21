@@ -1,0 +1,42 @@
+version: "3.9"
+
+# Development override: hot-reload backend and frontend
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+      - tdportal_data:/data
+    environment:
+      DATABASE_URL: sqlite:////data/tdportal.db
+      DEBUG: "true"
+      DEMO_MODE_ENABLED: "true"
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.worker
+    command: celery -A app.workers.celery_app worker --loglevel=debug --concurrency=1
+    volumes:
+      - ./backend:/app
+      - tdportal_data:/data
+    environment:
+      DEBUG: "true"
+      DEMO_MODE_ENABLED: "true"
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "5173:5173"
+    command: sh -c "npm ci && npm run dev -- --host"
+    environment:
+      VITE_API_URL: http://localhost:8000
+
+volumes:
+  tdportal_data:

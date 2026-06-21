@@ -1,0 +1,49 @@
+FROM python:3.11-slim
+
+LABEL maintainer="TDPortal-OS"
+LABEL description="Top-down proteomics platform — Celery worker (includes engine binaries where available)"
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
+
+WORKDIR /app
+
+# Runtime deps for bioinformatics tools
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    wget \
+    unzip \
+    libgomp1 \
+    libstdc++6 \
+    && rm -rf /var/lib/apt/lists/*
+
+# ──────────────────────────────────────────────────────────────────
+# TopPIC Suite installation (optional — builds from source or uses
+# pre-built Linux binary if available for CI/CD testing purposes).
+# Set INSTALL_TOPPIC=1 in the build environment to attempt install.
+# ──────────────────────────────────────────────────────────────────
+ARG INSTALL_TOPPIC=0
+RUN if [ "$INSTALL_TOPPIC" = "1" ]; then \
+      echo "[Worker] Attempting TopPIC Suite install..." && \
+      wget -q https://github.com/toppic-suite/toppic-suite/releases/download/v1.7.3/toppic-suite-1.7.3-linux.zip \
+        -O /tmp/toppic.zip && \
+      unzip -q /tmp/toppic.zip -d /opt/ && \
+      ln -sf /opt/toppic-suite-*/bin/topfd /usr/local/bin/topfd && \
+      ln -sf /opt/toppic-suite-*/bin/toppic /usr/local/bin/toppic && \
+      ln -sf /opt/toppic-suite-*/bin/topmg /usr/local/bin/topmg && \
+      rm /tmp/toppic.zip && \
+      echo "[Worker] TopPIC Suite installed." || \
+      echo "[Worker] TopPIC Suite install failed — demo mode only."; \
+    fi
+
+# Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ ./app/
+
+# Verify demo mode will work without real engines
+RUN python -c "from app.engines.demo import DemoAdapter; print('Demo adapter OK')"
+
+CMD ["celery", "-A", "app.workers.celery_app", "worker", "--loglevel=info", "--concurrency=2"]
