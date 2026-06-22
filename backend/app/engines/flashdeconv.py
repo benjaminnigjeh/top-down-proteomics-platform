@@ -68,8 +68,8 @@ class FLASHDeconvAdapter(SearchEngineAdapter):
                 "-in", str(mzml),
                 "-out", str(out_tsv),
                 "-out_mzml", str(output_dir / (mzml.stem + "_deconvolved.mzML")),
-                "-Algorithm:min_charge", "2",
-                "-Algorithm:max_charge", "100",
+                "-SD:min_charge", "2",
+                "-SD:max_charge", "100",
             ]
             proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
             for line in proc.stdout:
