@@ -1,4 +1,4 @@
-"""MassFlowNet adapter — placeholder for ProteoBio AI mass shift flow network."""
+﻿"""MassFlowNet adapter — placeholder for ProteoBio AI mass shift flow network."""
 from pathlib import Path
 from typing import Any, Optional
 from app.engines.base import SearchEngineAdapter, ProteoformResult
@@ -7,6 +7,8 @@ from app.engines.base import SearchEngineAdapter, ProteoformResult
 class MassFlowNetAdapter(SearchEngineAdapter):
     name = "massflownet"
     version = "placeholder"
+    category = "ai"
+    description = "MassFlowNet (ProteoBio AI) -- Graph neural network for mass shift analysis [coming soon]"
     input_formats = [".mzml"]
     output_formats = [".json"]
 
@@ -21,3 +23,4 @@ class MassFlowNetAdapter(SearchEngineAdapter):
 
     def parse_results(self, output_dir: Path) -> list[ProteoformResult]:
         raise NotImplementedError
+

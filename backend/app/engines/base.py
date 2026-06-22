@@ -46,6 +46,9 @@ class SearchEngineAdapter(ABC):
     version: str = "unknown"
     input_formats: list[str] = []
     output_formats: list[str] = []
+    # category: "search" | "deconvolution" | "pipeline" | "demo" | "ai"
+    category: str = "search"
+    description: str = ""
 
     @abstractmethod
     def validate_installation(self) -> bool:
@@ -93,6 +96,8 @@ class SearchEngineAdapter(ABC):
         return {
             "name": self.name,
             "version": self.version,
+            "category": self.category,
+            "description": self.description,
             "input_formats": self.input_formats,
             "output_formats": self.output_formats,
             "available": self.validate_installation(),

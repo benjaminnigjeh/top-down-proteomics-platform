@@ -18,12 +18,11 @@ from app.engines.base import SearchEngineAdapter, ProteoformResult
 
 
 class FLASHDeconvAdapter(SearchEngineAdapter):
-    """
-    FLASHDeconv deconvolution engine.
-    Produces deconvolved spectra; pairs with TopPIC for search.
-    """
+    """FLASHDeconv ultrafast top-down deconvolution (OpenMS 3.x)."""
     name = "flashdeconv"
     version = "unknown"
+    category = "deconvolution"
+    description = "FLASHDeconv (OpenMS) — Ultrafast charge-state deconvolution for top-down MS. Outputs neutral masses, not protein IDs. Pair with TopPIC for full search."
     input_formats = [".mzml"]
     output_formats = [".tsv", ".mzml"]
 
@@ -102,12 +101,11 @@ class FLASHDeconvAdapter(SearchEngineAdapter):
 
 
 class FLASHDeconvTopPICAdapter(SearchEngineAdapter):
-    """
-    Combined FLASHDeconv + TopPIC pipeline.
-    FLASHDeconv deconvolves; TopPIC searches against a FASTA database.
-    """
+    """Combined FLASHDeconv deconvolution → TopPIC database search pipeline."""
     name = "flashdeconv_toppic"
     version = "unknown"
+    category = "pipeline"
+    description = "FLASHDeconv + TopPIC pipeline — Deconvolves spectra with FLASHDeconv then searches against FASTA with TopPIC. Requires both installed."
     input_formats = [".mzml"]
     output_formats = [".tsv"]
 

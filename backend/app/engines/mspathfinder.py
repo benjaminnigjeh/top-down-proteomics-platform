@@ -17,14 +17,23 @@ from typing import Any, Optional
 from app.engines.base import SearchEngineAdapter, ProteoformResult
 
 
+MSPATHFINDER_BIN = r"C:\tools\InformedProteomics\MSPathFinderT.exe"
+PROMEX_BIN = r"C:\tools\InformedProteomics\ProMex.exe"
+PBFGEN_BIN = r"C:\tools\InformedProteomics\PbfGen.exe"
+
+
 class MSPathFinderTAdapter(SearchEngineAdapter):
     name = "mspathfindert"
     version = "unknown"
-    input_formats = [".mzml", ".pbf"]
+    category = "search"
+    description = "MSPathFinderT (Informed Proteomics / PNNL) — Database search for intact proteins; generates PBF index for fast re-searching"
+    input_formats = [".mzml", ".pbf", ".raw"]
     output_formats = [".tsv", ".mzid"]
 
     def validate_installation(self) -> bool:
-        bin_path = shutil.which("MSPathFinderT") or shutil.which("mspathfindert")
+        import os
+        bin_path = (shutil.which("MSPathFinderT") or shutil.which("mspathfindert")
+                    or (MSPATHFINDER_BIN if os.path.exists(MSPATHFINDER_BIN) else None))
         if bin_path:
             try:
                 r = subprocess.run([bin_path, "-version"], capture_output=True, text=True, timeout=5)
@@ -38,8 +47,11 @@ class MSPathFinderTAdapter(SearchEngineAdapter):
         return False
 
     def _bin(self) -> str:
+        import os
         from app.config import settings
-        return settings.MSPATHFINDER_BIN or "MSPathFinderT"
+        return (settings.MSPATHFINDER_BIN
+                or shutil.which("MSPathFinderT")
+                or (MSPATHFINDER_BIN if os.path.exists(MSPATHFINDER_BIN) else "MSPathFinderT"))
 
     def prepare_database(self, fasta_path: Path, ptm_config: Optional[Path], output_dir: Path) -> Path:
         return fasta_path

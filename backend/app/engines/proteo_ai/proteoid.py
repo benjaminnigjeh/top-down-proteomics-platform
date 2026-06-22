@@ -1,4 +1,4 @@
-"""
+﻿"""
 ProteoID adapter — placeholder for ProteoBio AI proteoform identification engine.
 
 To activate: implement validate_installation, run_search, and parse_results
@@ -12,6 +12,8 @@ from app.engines.base import SearchEngineAdapter, ProteoformResult
 class ProteoIDAdapter(SearchEngineAdapter):
     name = "proteoid"
     version = "placeholder"
+    category = "ai"
+    description = "ProteoID (ProteoBio AI) -- AI-based proteoform identification using deep learning [coming soon]"
     input_formats = [".mzml"]
     output_formats = [".json", ".tsv"]
 
@@ -26,3 +28,4 @@ class ProteoIDAdapter(SearchEngineAdapter):
 
     def parse_results(self, output_dir: Path) -> list[ProteoformResult]:
         raise NotImplementedError("ProteoID parser not implemented.")
+

@@ -1,9 +1,10 @@
-"""Central registry for all search engine adapters."""
+"""Central registry for all search engine and preprocessing adapters."""
 from app.engines.base import SearchEngineAdapter
 from app.engines.toppic import TopPICAdapter, TopMGAdapter
 from app.engines.mspathfinder import MSPathFinderTAdapter
 from app.engines.toplib import TopLibAdapter
 from app.engines.flashdeconv import FLASHDeconvAdapter, FLASHDeconvTopPICAdapter
+from app.engines.openms_tools import PeakPickerAdapter, DechargerAdapter, FeatureFinderCentroidedAdapter, ProMexAdapter
 from app.engines.demo import DemoAdapter
 from app.engines.proteo_ai import (
     ProteoIDAdapter, TruncNetAdapter, PTMNetAdapter,
@@ -11,18 +12,27 @@ from app.engines.proteo_ai import (
 )
 
 _ADAPTERS: dict[str, SearchEngineAdapter] = {
-    "toppic": TopPICAdapter(),
-    "topmg": TopMGAdapter(),
-    "mspathfindert": MSPathFinderTAdapter(),
-    "toplib": TopLibAdapter(),
-    "flashdeconv": FLASHDeconvAdapter(),
+    # ── Search engines ────────────────────────────────────────────────
+    "toppic":           TopPICAdapter(),
+    "topmg":            TopMGAdapter(),
+    "mspathfindert":    MSPathFinderTAdapter(),
+    "toplib":           TopLibAdapter(),
+    # ── Deconvolution / preprocessing ────────────────────────────────
+    "flashdeconv":      FLASHDeconvAdapter(),
+    "peakpicker":       PeakPickerAdapter(),
+    "decharger":        DechargerAdapter(),
+    "featurefinder":    FeatureFinderCentroidedAdapter(),
+    "promex":           ProMexAdapter(),
+    # ── Pipelines (deconvolution + search combined) ───────────────────
     "flashdeconv_toppic": FLASHDeconvTopPICAdapter(),
-    "demo": DemoAdapter(),
-    "proteoid": ProteoIDAdapter(),
-    "truncnet": TruncNetAdapter(),
-    "ptmnet": PTMNetAdapter(),
-    "massflownet": MassFlowNetAdapter(),
-    "proteoengine": ProteoEngineAdapter(),
+    # ── Demo ─────────────────────────────────────────────────────────
+    "demo":             DemoAdapter(),
+    # ── AI placeholders ──────────────────────────────────────────────
+    "proteoid":         ProteoIDAdapter(),
+    "truncnet":         TruncNetAdapter(),
+    "ptmnet":           PTMNetAdapter(),
+    "massflownet":      MassFlowNetAdapter(),
+    "proteoengine":     ProteoEngineAdapter(),
 }
 
 

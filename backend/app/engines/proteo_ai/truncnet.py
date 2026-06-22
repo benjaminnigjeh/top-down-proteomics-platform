@@ -1,4 +1,4 @@
-"""TruncNet adapter — placeholder for ProteoBio AI N/C-terminal truncation detection."""
+﻿"""TruncNet adapter — placeholder for ProteoBio AI N/C-terminal truncation detection."""
 from pathlib import Path
 from typing import Any, Optional
 from app.engines.base import SearchEngineAdapter, ProteoformResult
@@ -7,6 +7,8 @@ from app.engines.base import SearchEngineAdapter, ProteoformResult
 class TruncNetAdapter(SearchEngineAdapter):
     name = "truncnet"
     version = "placeholder"
+    category = "ai"
+    description = "TruncNet (ProteoBio AI) -- Neural network for N/C-terminal truncation detection [coming soon]"
     input_formats = [".mzml"]
     output_formats = [".json"]
 
@@ -21,3 +23,4 @@ class TruncNetAdapter(SearchEngineAdapter):
 
     def parse_results(self, output_dir: Path) -> list[ProteoformResult]:
         raise NotImplementedError
+

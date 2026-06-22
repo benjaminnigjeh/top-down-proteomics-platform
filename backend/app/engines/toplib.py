@@ -17,6 +17,8 @@ from app.engines.base import SearchEngineAdapter, ProteoformResult
 class TopLibAdapter(SearchEngineAdapter):
     name = "toplib"
     version = "unknown"
+    category = "search"
+    description = "TopLib (TopPIC Suite) — Spectral library search for top-down MS; faster than database search when a library exists"
     input_formats = [".mzml", ".mzxml", ".splib"]
     output_formats = [".tsv"]
 

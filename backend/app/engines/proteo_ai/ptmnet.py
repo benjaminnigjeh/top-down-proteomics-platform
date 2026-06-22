@@ -1,4 +1,4 @@
-"""PTMNet adapter — placeholder for ProteoBio AI PTM localization network."""
+﻿"""PTMNet adapter — placeholder for ProteoBio AI PTM localization network."""
 from pathlib import Path
 from typing import Any, Optional
 from app.engines.base import SearchEngineAdapter, ProteoformResult
@@ -7,6 +7,8 @@ from app.engines.base import SearchEngineAdapter, ProteoformResult
 class PTMNetAdapter(SearchEngineAdapter):
     name = "ptmnet"
     version = "placeholder"
+    category = "ai"
+    description = "PTMNet (ProteoBio AI) -- AI-driven PTM site localization and confidence scoring [coming soon]"
     input_formats = [".mzml"]
     output_formats = [".json"]
 
@@ -21,3 +23,4 @@ class PTMNetAdapter(SearchEngineAdapter):
 
     def parse_results(self, output_dir: Path) -> list[ProteoformResult]:
         raise NotImplementedError
+

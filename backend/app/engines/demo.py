@@ -34,11 +34,10 @@ _MODIFICATIONS = [
 
 
 class DemoAdapter(SearchEngineAdapter):
-    """
-    DEMO ONLY — produces synthetic data for UI/workflow testing.
-    All results carry is_demo=True and are visually flagged in the UI.
-    """
+    """DEMO ONLY — produces synthetic data for UI/workflow testing."""
     name = "demo"
+    category = "demo"
+    description = "⚠️ DEMO ONLY — Generates 50 synthetic proteoform identifications for UI testing. All results are fabricated and clearly labeled."
     version = "1.0.0-demo"
     input_formats = [".mzml", ".mzxml", ".fasta"]
     output_formats = [".tsv"]

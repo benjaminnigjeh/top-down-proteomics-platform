@@ -99,9 +99,13 @@ export interface ProteoformResult {
   is_demo: boolean
 }
 
+export type EngineCategory = 'search' | 'deconvolution' | 'pipeline' | 'demo' | 'ai'
+
 export interface EngineInfo {
   name: string
   version: string
+  category: EngineCategory
+  description: string
   input_formats: string[]
   output_formats: string[]
   available: boolean

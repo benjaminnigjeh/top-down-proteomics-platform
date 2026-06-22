@@ -18,6 +18,8 @@ from app.engines.base import SearchEngineAdapter, ProteoformResult
 class TopPICAdapter(SearchEngineAdapter):
     name = "toppic"
     version = "unknown"
+    category = "search"
+    description = "TopFD + TopPIC — Full top-down pipeline: deconvolution + proteoform identification against a FASTA database"
     input_formats = [".mzml", ".mzxml"]
     output_formats = [".tsv", ".xml", ".html"]
 
@@ -161,6 +163,8 @@ class TopPICAdapter(SearchEngineAdapter):
 class TopMGAdapter(TopPICAdapter):
     """TopPIC Suite's TopMG for proteogenomics / unexpected modifications."""
     name = "topmg"
+    category = "search"
+    description = "TopFD + TopMG — Proteogenomics search; tolerates large unexpected modifications"
 
     def _toppic_bin(self) -> str:
         from app.config import settings
