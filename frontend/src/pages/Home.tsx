@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button'
 
 const features = [
   { icon: Upload, title: 'Multi-File Upload', desc: 'Upload mzML, FASTA, and PTM config files for analysis' },
-  { icon: Cpu, title: 'Multiple Search Engines', desc: 'TopPIC, MSPathFinderT, FLASHDeconv, TopLib, and custom adapters' },
+  { icon: Cpu, title: 'Multiple Search Engines', desc: 'TopPIC, TopMG, MSPathFinderT, pTop, Protein Prospector, MetaMorpheus, and more' },
   { icon: BarChart3, title: 'Real Results Only', desc: 'No fake data — engines run real algorithms on your data' },
   { icon: GitCompare, title: 'Cross-Engine Comparison', desc: 'Compare results across engines, view overlaps and consensus' },
 ]
@@ -17,7 +17,7 @@ export default function Home() {
         <div className="flex justify-center mb-4">
           <Dna className="w-14 h-14 text-blue-200" />
         </div>
-        <h1 className="text-4xl font-bold tracking-tight">TDPortal-OS</h1>
+        <h1 className="text-4xl font-bold tracking-tight">Proteoformer Pipeline</h1>
         <p className="text-blue-200 text-lg mt-2">Open-Source Top-Down Proteomics Search Platform</p>
         <p className="text-blue-300 text-sm mt-1">Not affiliated with official TDPortal or ProSight</p>
         <div className="flex justify-center gap-4 mt-6">

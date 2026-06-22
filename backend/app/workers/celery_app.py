@@ -5,7 +5,7 @@ celery_app = Celery(
     "tdportal",
     broker=settings.CELERY_BROKER_URL,
     backend=settings.CELERY_RESULT_BACKEND,
-    include=["app.workers.tasks"],
+    include=["app.workers.tasks", "app.workers.conversion_tasks"],
 )
 
 celery_app.conf.update(

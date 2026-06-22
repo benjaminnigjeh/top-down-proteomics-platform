@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { Upload, Job, JobStatus, ProteoformResult, EngineInfo, VennData, ExportFormat } from '@/types'
+import type { Upload, Job, JobStatus, ProteoformResult, EngineInfo, VennData, ExportFormat, ConversionTool, Conversion, ConversionCreate } from '@/types'
 
 const BASE = '/api/v1'
 
@@ -110,4 +110,34 @@ export async function getResult(resultId: string): Promise<ProteoformResult> {
 
 export function getExportUrl(jobId: string, format: ExportFormat): string {
   return `${BASE}/exports/job/${jobId}/${format}`
+}
+
+// ── Conversions ───────────────────────────────────────────────────
+
+export async function listConversionTools(): Promise<ConversionTool[]> {
+  const { data } = await api.get<ConversionTool[]>('/conversions/tools')
+  return data
+}
+
+export async function createConversion(payload: ConversionCreate): Promise<Conversion> {
+  const { data } = await api.post<Conversion>('/conversions', payload)
+  return data
+}
+
+export async function listConversions(): Promise<Conversion[]> {
+  const { data } = await api.get<Conversion[]>('/conversions')
+  return data
+}
+
+export async function getConversion(id: string): Promise<Conversion> {
+  const { data } = await api.get<Conversion>(`/conversions/${id}`)
+  return data
+}
+
+export async function deleteConversion(id: string): Promise<void> {
+  await api.delete(`/conversions/${id}`)
+}
+
+export function getConversionDownloadUrl(id: string): string {
+  return `${BASE}/conversions/${id}/download`
 }

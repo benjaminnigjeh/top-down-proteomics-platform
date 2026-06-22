@@ -6,7 +6,7 @@ from pathlib import Path
 
 from app.config import settings
 from app.database import create_all_tables
-from app.api.routes import uploads, jobs, results, engines, exports
+from app.api.routes import uploads, jobs, results, engines, exports, conversions
 
 
 @asynccontextmanager
@@ -40,6 +40,7 @@ app.include_router(jobs.router, prefix=API_PREFIX)
 app.include_router(results.router, prefix=API_PREFIX)
 app.include_router(engines.router, prefix=API_PREFIX)
 app.include_router(exports.router, prefix=API_PREFIX)
+app.include_router(conversions.router, prefix=API_PREFIX)
 
 
 @app.get("/api/v1/health")

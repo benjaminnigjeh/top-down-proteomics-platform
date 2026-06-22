@@ -22,7 +22,10 @@ class Settings(BaseSettings):
     EXAMPLE_DIR: Path = Path("/data/examples")
 
     MAX_UPLOAD_SIZE_MB: int = 2048
-    ALLOWED_EXTENSIONS: list[str] = [".mzml", ".mzxml", ".fasta", ".fa", ".xml", ".json", ".csv", ".tsv"]
+    ALLOWED_EXTENSIONS: list[str] = [
+        ".mzml", ".mzxml", ".fasta", ".fa", ".xml", ".json", ".csv", ".tsv",
+        ".raw", ".d", ".wiff", ".ms1", ".ms2", ".mgf", ".mz5",
+    ]
 
     CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:5173"]
 

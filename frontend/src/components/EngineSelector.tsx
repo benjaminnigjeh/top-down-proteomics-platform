@@ -1,5 +1,5 @@
 import { clsx } from 'clsx'
-import { CheckCircle, XCircle, Search, Zap, GitMerge, FlaskConical, Bot } from 'lucide-react'
+import { CheckCircle, XCircle, Search, Zap, GitMerge, FlaskConical } from 'lucide-react'
 import type { EngineInfo, EngineCategory } from '@/types'
 import { useEngines } from '@/hooks/useEngines'
 
@@ -8,7 +8,6 @@ const CATEGORY_META: Record<EngineCategory, { label: string; color: string; icon
   deconvolution: { label: 'Deconvolution / Preprocessing', color: 'teal',   icon: Zap,    note: 'These tools process raw spectra but do not search a protein database. Use standalone to inspect deconvolved masses, or as part of a pipeline.' },
   pipeline:      { label: 'Pipelines',                    color: 'purple', icon: GitMerge, note: 'End-to-end workflows combining deconvolution + database search.' },
   demo:          { label: 'Demo',                         color: 'amber',  icon: FlaskConical, note: 'Produces entirely synthetic data for UI testing only. Never use for real research.' },
-  ai:            { label: 'AI Engines (Coming Soon)',     color: 'gray',   icon: Bot },
 }
 
 const COLOR_CLASSES: Record<string, { header: string; badge: string; ring: string }> = {
@@ -24,12 +23,18 @@ interface EngineSelectorProps {
   onChange: (engines: string[]) => void
 }
 
+// Search engines that run TopFD internally — selecting topfd alongside these is redundant
+const TOPFD_INTERNAL = new Set(['toppic', 'topmg', 'topdiff'])
+
 export function EngineSelector({ selected, onChange }: EngineSelectorProps) {
   const { data: engines = [], isLoading } = useEngines()
 
   const toggle = (name: string) => {
     onChange(selected.includes(name) ? selected.filter(e => e !== name) : [...selected, name])
   }
+
+  const redundantTopFD =
+    selected.includes('topfd') && selected.some(e => TOPFD_INTERNAL.has(e))
 
   if (isLoading) return <div className="text-gray-500 text-sm py-4">Loading engines…</div>
   if (engines.length === 0) return <p className="text-sm text-gray-500">No engines reported by the server.</p>
@@ -40,10 +45,18 @@ export function EngineSelector({ selected, onChange }: EngineSelectorProps) {
     return acc
   }, {})
 
-  const categoryOrder: EngineCategory[] = ['search', 'deconvolution', 'pipeline', 'demo', 'ai']
+  const categoryOrder: EngineCategory[] = ['search', 'deconvolution', 'pipeline', 'demo']
 
   return (
     <div className="space-y-6">
+      {redundantTopFD && (
+        <div className="bg-amber-50 border border-amber-300 rounded-lg px-3 py-2 text-xs text-amber-800">
+          <strong>Note:</strong> TopPIC / TopMG / TopDiff already run TopFD internally.
+          Selecting <code className="bg-amber-100 px-0.5 rounded">topfd</code> alongside them
+          will run deconvolution twice. Remove <code className="bg-amber-100 px-0.5 rounded">topfd</code> unless
+          you only want the raw msalign output.
+        </div>
+      )}
       {categoryOrder.map(cat => {
         const items = byCategory[cat]
         if (!items || items.length === 0) return null

@@ -1,11 +1,12 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { clsx } from 'clsx'
-import { Dna, Upload, Briefcase, BarChart3, Info } from 'lucide-react'
+import { Dna, Upload, Briefcase, RefreshCw, Info } from 'lucide-react'
 
 const nav = [
   { to: '/', label: 'Home', icon: Dna, end: true },
   { to: '/upload', label: 'New Job', icon: Upload },
   { to: '/jobs', label: 'Jobs', icon: Briefcase },
+  { to: '/convert', label: 'Convert', icon: RefreshCw },
   { to: '/about', label: 'About', icon: Info },
 ]
 
@@ -17,8 +18,8 @@ export default function Layout() {
           <div className="flex items-center gap-3">
             <Dna className="w-7 h-7 text-blue-300" />
             <div>
-              <span className="text-xl font-bold tracking-tight">TDPortal</span>
-              <span className="text-blue-300 text-xs ml-1">-OS</span>
+              <span className="text-xl font-bold tracking-tight">Proteoformer</span>
+              <span className="text-blue-300 text-xs ml-1 font-semibold">Pipeline</span>
             </div>
             <span className="text-blue-400 text-xs hidden sm:inline ml-2 border-l border-blue-700 pl-2">
               Open-Source Top-Down Proteomics
@@ -53,7 +54,7 @@ export default function Layout() {
 
       <footer className="bg-white border-t border-gray-200 py-4">
         <div className="max-w-7xl mx-auto px-4 text-center text-xs text-gray-400">
-          TDPortal-OS is an independent open-source project. Not affiliated with official TDPortal or ProSight.
+          Proteoformer Pipeline is an independent open-source project. Not affiliated with official TDPortal or ProSight.
           Real search results require installed engine binaries. Demo mode produces synthetic data only.
         </div>
       </footer>

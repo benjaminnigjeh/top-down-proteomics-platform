@@ -7,6 +7,7 @@ import Jobs from '@/pages/Jobs'
 import JobDetail from '@/pages/JobDetail'
 import ResultDetail from '@/pages/Results'
 import About from '@/pages/About'
+import ConvertPage from '@/pages/Convert'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="/jobs/:jobId" element={<JobDetail />} />
             <Route path="/jobs/:jobId/results/:resultId" element={<ResultDetail />} />
             <Route path="/about" element={<About />} />
+            <Route path="/convert" element={<ConvertPage />} />
           </Route>
         </Routes>
       </BrowserRouter>

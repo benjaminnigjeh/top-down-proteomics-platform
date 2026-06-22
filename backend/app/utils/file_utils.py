@@ -3,7 +3,10 @@ import shutil
 import uuid
 from pathlib import Path
 
-ALLOWED_EXTENSIONS = {".mzml", ".mzxml", ".fasta", ".fa", ".xml", ".json", ".csv", ".tsv"}
+ALLOWED_EXTENSIONS = {
+    ".mzml", ".mzxml", ".fasta", ".fa", ".xml", ".json", ".csv", ".tsv",
+    ".raw", ".d", ".wiff", ".ms1", ".ms2", ".mgf", ".mz5",
+}
 
 
 def validate_extension(filename: str) -> str:
@@ -24,6 +27,13 @@ def determine_file_type(filename: str) -> str:
         ".json": "json",
         ".csv": "csv",
         ".tsv": "tsv",
+        ".raw": "raw",
+        ".d": "raw",
+        ".wiff": "raw",
+        ".ms1": "ms1",
+        ".ms2": "ms2",
+        ".mgf": "mgf",
+        ".mz5": "mz5",
     }
     return mapping.get(ext, "unknown")
 

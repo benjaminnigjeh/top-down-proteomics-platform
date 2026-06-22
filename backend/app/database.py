@@ -32,5 +32,5 @@ def get_db():
 
 
 def create_all_tables():
-    from app.models import job, result, upload  # noqa: F401
+    from app.models import job, result, upload, conversion  # noqa: F401
     Base.metadata.create_all(bind=engine)
